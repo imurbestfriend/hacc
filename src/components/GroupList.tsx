@@ -14,6 +14,7 @@ export default function GroupList() {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
+    
     const getGroups = async () => {
         try {
             setLoading(true);
