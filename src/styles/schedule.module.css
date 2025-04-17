@@ -115,3 +115,43 @@
   font-size: 1.2rem;
   color: #666;
 }
+
+/* Add these to your existing CSS */
+.authRequired {
+  color: #ff9800;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 8px;
+}
+
+.queueCountdown {
+  color: #ff9800;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.queueClosed {
+  color: #f44336;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.error {
+  color: #f44336;
+  background-color: #ffebee;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  border-left: 3px solid #f44336;
+}
+
+.success {
+  color: #4caf50;
+  background-color: #e8f5e9;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  border-left: 3px solid #4caf50;
+}
