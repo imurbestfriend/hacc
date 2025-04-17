@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Auth from "./components/Auth.tsx";
 import GroupList from "./components/GroupList.tsx";
+import Schedule from "./components/Schedule.tsx";
 
 function App() {
     return (
@@ -11,6 +11,7 @@ function App() {
                 <Route path="/" element={<Auth/>} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dashboard/grouplist" element={<GroupList />} />
+                <Route path="/schedule" element={<Schedule />} />
             </Routes>
         </Router>
     );

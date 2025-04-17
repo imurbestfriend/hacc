@@ -7,7 +7,7 @@ import styles from "../styles/login.module.css";
 import Cookies from "js-cookie"
 
 
-const API_URL = import.meta.env.VITE_API_URL || "https://testhackbackend-production.up.railway.app";
+const API_URL = import.meta.env.VITE_API_URL;
 
 // Типы для ответов API
 interface AuthResponse {
@@ -19,7 +19,7 @@ interface RegisterResponse {
   message: string;
 }
 
-interface ErrorResponse {
+export interface ErrorResponse {
   code: string;
   details: string;
   message: string;
