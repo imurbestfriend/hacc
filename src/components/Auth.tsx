@@ -6,7 +6,7 @@ import Register from "./Register";
 import styles from "../styles/login.module.css";
 import Cookies from "js-cookie"
 
-// Используем переменную окружения или значение по умолчанию
+
 const API_URL = import.meta.env.VITE_API_URL || "https://testhackbackend-production.up.railway.app";
 
 // Типы для ответов API
