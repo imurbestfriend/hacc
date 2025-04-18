@@ -5,6 +5,11 @@
   font-family: 'Roboto', sans-serif;
 }
 
+.errorBtn{
+  margin: 0 auto;
+  display: block;
+}
+
 .title {
   text-align: center;
   margin-bottom: 30px;
