@@ -12,8 +12,7 @@ interface ScheduleClassProps {
 const ScheduleClass = ({ item }: ScheduleClassProps) => {
 	const { schedule, queue } = item
 	const [timeUntilOpen, setTimeUntilOpen] = useState<string>('')
-	const [, setIsAuthenticated] = useState<boolean>(false)
-	// const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 	const [showQueueModal, setShowQueueModal] = useState<boolean>(false)
 	const [joinSuccess, setJoinSuccess] = useState<boolean>(false)
 
@@ -48,6 +47,7 @@ const ScheduleClass = ({ item }: ScheduleClassProps) => {
 		// Check if user is authenticated
 		const accessToken = Cookies.get('access_token')
 		setIsAuthenticated(!!accessToken)
+
 		if (!isQueueNotYetOpen && !shouldShowQueueCountdown) return
 
 		const updateTimer = () => {
