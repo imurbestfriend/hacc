@@ -56,7 +56,7 @@ const ScheduleClass = ({ item }: ScheduleClassProps) => {
 			const diffMs = queueOpenTime.getTime() - now.getTime()
 
 			if (diffMs <= 0) {
-				setTimeUntilOpen('Очередь должна открыться')
+				setTimeUntilOpen('5 минут')
 				return
 			}
 
