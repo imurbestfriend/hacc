@@ -12,6 +12,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/dashboard/grouplist" element={<GroupList />} />
                 <Route path="/dashboard/schedule" element={<Schedule />} />
+                {/* <Route path="/dashboard/grouplist/schedule/:id" element={<Schedule />} /> */}
             </Routes>
         </Router>
     );

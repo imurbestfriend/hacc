@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
+import styles from "../styles/grouplist.module.css";
 
 interface Group {
   id: string;
@@ -14,12 +18,16 @@ interface GroupResponse {
   total: number;
 }
 
+
+
 export default function GroupList() {
     const API_URL = import.meta.env.VITE_API_URL;
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    
+    const [search, setSearch] = useState<string>(''); 
+
+    const navigate = useNavigate();
     const getGroups = async () => {
         try {
             setLoading(true);
@@ -37,27 +45,50 @@ export default function GroupList() {
     useEffect(() => {
         getGroups();
     }, []);
+    
+    const filteredGroups = groups.filter((group) => {
+        const searchStr = search.toLowerCase();
+        return group.number.toLowerCase().includes(searchStr) || 
+               group.name.toLowerCase().includes(searchStr);
+    });
 
+    const handleClick = (id: string, number: string) => { 
+        Cookies.set("group_id",id)
+        Cookies.set("group_name", number)
+        navigate(`/dashboard/schedule`); 
+    };
     return (
-        <div className="group-list-container">
-            <h1 className="group-list-title">Group List</h1>
+        <div> 
+            <h1>Group List</h1>
             
-            {loading && <p className="loading-message">Loading groups...</p>}
+            {loading && <p>Loading groups...</p>}
             
-            {error && <p className="error-message">{error}</p>}
+            {error && <p>{error}</p>}
             
             {!loading && !error && groups.length === 0 && (
-                <p className="no-groups-message">No groups found</p>
+                <p className={styles.empty}>No groups found</p>
             )}
             
-            <div className="groups-grid">
-                {groups.map((group) => (
-                    <div key={group.id} className="group-card">
-                        <div className="group-number">Group #{group.number}</div>
-                        <div className="group-name">{group.name}</div>
-                    </div>
+            <input 
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <ul className={styles.groupsGrid}>
+                {filteredGroups.map((group) => (
+                    <li 
+                        key={group.id} 
+                        className={styles.groupCard} 
+                        onClick={() => handleClick(group.id, group.number)}
+                    >
+                        <div className={styles.title}>Group #{group.number}</div>
+                        <div>{group.name}</div>
+                    </li>
                 ))}
-            </div>
+            </ul>
         </div>        
     );
+    
 }
