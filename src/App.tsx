@@ -1,20 +1,30 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Auth, { AuthProvider, ProtectedRoute } from "./components/Auth";
 import Dashboard from "./components/Dashboard";
-import Auth from "./components/Auth.tsx";
-import GroupList from "./components/GroupList.tsx";
-import Schedule from "./components/Schedule.tsx";
+import GroupList from "./components/GroupList";
+import Schedule from "./components/GroupList";
+
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Auth/>} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/dashboard/grouplist" element={<GroupList />} />
-                <Route path="/schedule" element={<Schedule />} />
-            </Routes>
-        </Router>
-    );
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>         
+          <Route path="/" element={<Auth />} />
+          
+         
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/grouplist" element={<GroupList />} />
+            <Route path="/dashboard/grouplist/schedule/:id" element={<Schedule />} />
+            
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
 }
 
 export default App;
