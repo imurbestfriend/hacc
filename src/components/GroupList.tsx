@@ -49,7 +49,10 @@ export default function GroupList() {
         getGroups();
     }, []);
     
-    const filteredGroups = groups.filter((group) => {
+    const abgroups = [...groups]
+                .sort((a, b) => a.number.localeCompare(b.number))
+
+    const filteredGroups = abgroups.filter((group) => {
         const searchStr = search.toLowerCase();
         return group.number.toLowerCase().includes(searchStr) || 
                group.name.toLowerCase().includes(searchStr);
@@ -129,7 +132,7 @@ export default function GroupList() {
                         className={styles.groupCard} 
                         onClick={() => handleClick(group.id, group.number)}
                     >
-                        <div className={styles.title}>Group #{group.number}</div>
+                        <div className={styles.title}>{group.number}</div>
                         <div>{group.name}</div>
                     </li>
                 ))}
