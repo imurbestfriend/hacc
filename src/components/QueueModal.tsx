@@ -216,6 +216,7 @@ const QueueModal = ({
 		}
 	}
 
+	
 	// Close modal when clicking outside or pressing Escape
 	useEffect(() => {
 		const handleEscape = (e: KeyboardEvent) => {
