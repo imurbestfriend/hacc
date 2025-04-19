@@ -29,7 +29,7 @@ const ScheduleClass = ({ item }: ScheduleClassProps) => {
 	// Calculate time until queue opens (28 hours before class)
 	const queueOpenTime = hasQueue
 		? parseISO(queue.OpensAt)
-		: addHours(parseISO(schedule.StartTime), -28)
+		: addHours(parseISO(schedule.StartTime), -56)
 
 	const now = new Date()
 	const isQueueOpen = hasQueue && queue.IsActive

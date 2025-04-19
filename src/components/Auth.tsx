@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Login from "./Login";
 import Register from "./Register";
-import styles from "../styles/login.module.css";
+import styles from "../styles/auth.module.css";
 import Cookies from "js-cookie"
 
 
@@ -160,14 +160,15 @@ export default function Auth() {
                 />
             )}
             
-            <span>
+            <div className={styles.toggleContainer}>
+            {isLoginMode ? "Еще нет профиля?" : "Уже есть профиль?"}
                 <button
                     onClick={toggleMode}
                     className={styles.toggleButton}
                 >
-                    {isLoginMode ? "Switch to Register" : "Switch to Login"}
+                   {isLoginMode ? "Зарегистрироваться" : "Войти"}
                 </button>
-            </span>
+            </div>
             
             {error && <div className={styles.error}>{error}</div>}
             {success && <div className={styles.success}>
