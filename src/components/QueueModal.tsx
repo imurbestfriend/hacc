@@ -3,6 +3,7 @@ import { QueueStatus } from '../types/schedule'
 import { queueService } from '../services/queueService'
 import styles from '../styles/queueModal.module.css'
 import Cookies from 'js-cookie'
+import { useRef } from 'react'
 
 interface QueueModalProps {
 	queueId: number
@@ -28,6 +29,7 @@ const QueueModal = ({
 		text: string
 		type: 'success' | 'error'
 	} | null>(null)
+	const wsRef = useRef<WebSocket | null>(null)
 
 	// Check if user is authenticated and get user ID from token
 	useEffect(() => {
@@ -94,6 +96,52 @@ const QueueModal = ({
 	useEffect(() => {
 		fetchQueueStatus()
 	}, [fetchQueueStatus])
+
+	useEffect(() => {
+    const token = Cookies.get('access_token')
+    // выбираем протокол в зависимости от того, на каком хосте запущен FE
+    const protocol = import.meta.env.VITE_WS_URL?.startsWith('wss') ? 'wss' : 'ws'
+		console.log('protocol', protocol)
+    const wsUrl = `${import.meta.env.VITE_WS_URL}/api/queues/${queueId}/ws`
+    // если бекенд требует заголовок Authorization, можно передать токен в query:
+    const urlWithToken = token ? `${wsUrl}?token=${token}` : wsUrl
+
+    const ws = new WebSocket(urlWithToken)
+    wsRef.current = ws
+
+    ws.onopen = () => {
+      console.log('WebSocket connected to queue', queueId)
+    }
+
+    ws.onmessage = (event) => {
+      try {
+        const msg = JSON.parse(event.data) as {
+          event_type: string
+          queue_id: string
+          data?: any
+        }
+        console.log('WS message:', msg)
+        // 3) Обновляем статус очереди по событию
+        // В простейшем случае — просто перезапрос
+        fetchQueueStatus()
+      } catch (e) {
+        console.error('WS parse error:', e)
+      }
+    }
+
+    ws.onerror = (err) => {
+      console.error('WebSocket error:', err)
+    }
+
+    ws.onclose = () => {
+      console.log('WebSocket disconnected')
+    }
+
+    // При анмаунте закрываем
+    return () => {
+      ws.close()
+    }
+  }, [queueId, fetchQueueStatus])
 
 	// Join queue handler
 	const handleJoinQueue = async () => {
