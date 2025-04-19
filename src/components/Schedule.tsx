@@ -88,7 +88,7 @@ const Schedule = () => {
 			// <div className={styles.errorBlock}>
 			<div>
 				<div className={styles.error}>{error}</div>
-				<button className={styles.errorBtn} onClick={handleBack}>Назад</button>
+				<button className={styles.errorB} onClick={handleBack}>Назад</button>
 			</div>
 		) 
 		
