@@ -116,9 +116,10 @@ export default function Auth() {
                     case 400:
                         if (errorData.code === "EMAIL_EXISTS") {
                             setError("Пользователь с таким email уже существует");
-                        } else {
-                            setError(`Ошибка валидации: ${errorData.message}`);
-                        }
+                        } 
+                        // else {
+                        //     setError(`Ошибка валидации: ${errorData.message}`);
+                        // }
                         break;
                     case 500:
                         if (errorData.code === "PASSWORD_HASH_ERROR") {

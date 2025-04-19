@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import styles from "../styles/grouplist.module.css";
 import { Link } from "react-router-dom";
-
+import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 // import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -62,7 +62,8 @@ export default function GroupList() {
     };
     return (
         <div> 
-            <h1>Group List</h1>
+            <h1>Добро подаловать!</h1>
+            <p>Для просмотра расписания выберите свою группу:</p>
             <Link to="/dashboard">Dashboard</Link>
             {/* {loading && <p>Loading groups...</p>} */}
             {loading && 
@@ -75,8 +76,43 @@ export default function GroupList() {
             {!loading && !error && groups.length === 0 && (
                 <p className={styles.empty}>No groups found</p>
             )}
-            
-            {!loading && 
+            {!loading && <Box
+                component="form"
+                sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}
+                noValidate
+                autoComplete="off"
+            >
+                <TextField  id="filled-basic"
+                            label="Номер группы"
+                            variant="filled"
+                            className={styles.inputField}
+                            type="text"
+                            value={search}
+                            sx={{
+                                width: '400px',
+                                marginBottom: '10px', 
+                                '& .MuiFilledInput-root': { // Стиль для всего поля ввода
+                                  paddingLeft: '12px', // Можно настроить внутренние отступы
+                                  paddingRight: '12px',
+                                },
+                                '& .MuiInputBase-input': { // Стиль для текста
+                                  width: '100%', 
+                                },
+                                '& .MuiFilledInput-underline:before': { 
+                                  borderBottomColor: '#00004B',
+                                },
+                                '& .MuiFilledInput-underline:after': { 
+                                  borderBottomColor: '#00004B', 
+                                },
+                                '& .Mui-focused': { 
+                                  color: '#00004B',
+                                }
+                              }}
+                            // placeholder="Email"
+                            
+                            onChange={(e) => setSearch(e.target.value)}/>
+            </Box>}
+            {/* {!loading && 
                 <input 
                 type="text"
                 placeholder="Search..."
@@ -84,7 +120,7 @@ export default function GroupList() {
                 onChange={(e) => setSearch(e.target.value)}
             />
             
-            }
+            } */}
             
             <ul className={styles.groupsGrid}>
                 {filteredGroups.map((group) => (
